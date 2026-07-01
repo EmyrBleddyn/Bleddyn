@@ -276,108 +276,7 @@
   .todo-item:hover .todo-del { opacity: 1; }
   .todo-del:hover { color: var(--danger); }
 
-  /* ── NEWS ── */
-  .news-card {
-    grid-column: 2;
-    grid-row: 2;
-  }
-
-  .news-controls {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 14px;
-  }
-
-  .news-tabs {
-    display: flex;
-    gap: 6px;
-  }
-
-  .news-tab {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    color: var(--muted);
-    border-radius: 7px;
-    padding: 5px 12px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    font-family: var(--font);
-    transition: all 0.15s;
-  }
-
-  .news-tab.active {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
-    font-weight: 600;
-  }
-
-  .btn-refresh {
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    border-radius: 7px;
-    padding: 5px 11px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    font-family: var(--font);
-    transition: all 0.15s;
-  }
-
-  .btn-refresh:hover { border-color: var(--accent); color: var(--accent); }
-
-  .news-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    max-height: 280px;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--border) transparent;
-  }
-
-  .news-item {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 9px;
-    padding: 12px 14px;
-    text-decoration: none;
-    transition: border-color 0.15s;
-    cursor: pointer;
-  }
-
-  .news-item:hover { border-color: var(--accent); }
-
-  .news-source {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--accent);
-    font-weight: 600;
-  }
-
-  .news-headline {
-    font-size: 0.9rem;
-    color: var(--text);
-    line-height: 1.4;
-  }
-
-  .news-time {
-    font-size: 0.75rem;
-    color: var(--muted);
-  }
-
-  .news-loading {
-    text-align: center;
-    color: var(--muted);
-    padding: 24px;
-    font-size: 0.9rem;
-  }
-
+  
   @media (max-width: 800px) {
     .grid { grid-template-columns: 1fr; }
     .clock-card, .calendar-card, .todo-card, .news-card {
@@ -425,21 +324,11 @@
   </div>
 
   <!-- NEWS -->
-  <div class="card news-card">
-    <div class="news-controls">
-      <div class="news-tabs" id="news-tabs">
-        <button class="news-tab active" data-topic="world">World</button>
-        <button class="news-tab" data-topic="technology">Tech</button>
-        <button class="news-tab" data-topic="science">Science</button>
-        <button class="news-tab" data-topic="business">Business</button>
-      </div>
-      <button class="btn-refresh" id="news-refresh">↻ Refresh</button>
-    </div>
-    <div class="news-list" id="news-list">
-      <div class="news-loading">Loading headlines…</div>
-    </div>
-  </div>
 
+<div class="card news-card" style="grid-column:2;grid-row:2">
+  <iframe src="rss-feed.html"
+    style="width:100%;height:100%;border:none;border-radius:10px"
+    title="RSS Feed"></iframe>
 </div>
 
 <script>
