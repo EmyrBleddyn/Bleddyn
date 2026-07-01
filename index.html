@@ -536,45 +536,79 @@ document.getElementById('todo-add').onclick = addTodo;
 document.getElementById('todo-input').onkeydown = e => { if (e.key === 'Enter') addTodo(); };
 renderTodos();
 
-/* ── IMAGE ROTATOR ── */
+/* ── IMAGE ROTATOR (Lorem Picsum — no API key needed) ── */
 (function() {
   const SLIDE_INTERVAL = 7000; // ms per slide
-  const PRELOAD_COUNT  = 6;    // images per batch
+  const BATCH          = 8;    // images per set
   const W = 900, H = 480;
 
-  let topic       = 'nature';
-  let slides      = [];       // { url, alt, photographer }
+  // Picsum has ~1000 images with IDs 0-1084 (some gaps).
+  // We fetch the full list once, cache it, then pick random subsets per "topic".
+  // Topics are simulated by picking different random slices — Picsum doesn't
+  // support keyword search, but the library is large and visually varied.
+  // We use /v2/list to get author names for proper attribution.
+
+  const TOTAL_IDS = 1000;
+
+  let allImages    = [];   // [{id, author, download_url}] from /v2/list
+  let listFetched  = false;
+
+  let slides      = [];
   let current     = 0;
   let autoplay    = true;
-  let ticker      = null;
-  let tickMs      = 0;
   let tickStart   = null;
   let rafId       = null;
 
-  const stage     = document.getElementById('img-stage');
-  const dotsEl    = document.getElementById('img-dots');
-  const counter   = document.getElementById('img-counter');
+  const stage       = document.getElementById('img-stage');
+  const dotsEl      = document.getElementById('img-dots');
+  const counter     = document.getElementById('img-counter');
   const progressBar = document.getElementById('img-progress-bar');
-  const autoLabel = document.getElementById('img-auto-label');
+  const autoLabel   = document.getElementById('img-auto-label');
 
-  // ── Build a batch of Unsplash Source URLs (no API key needed) ──────────────
-  // Unsplash Source: https://source.unsplash.com/WxHxARSBmVQ — stable single image
-  // We use featured + topic + unique seed to get varied images
-  function buildUrls(q, n) {
-    const urls = [];
-    for (let i = 0; i < n; i++) {
-      // cache-bust with a random seed so each slot loads a different photo
-      const seed = Math.floor(Math.random() * 1e9);
-      urls.push({
-        url: `https://source.unsplash.com/featured/${W}x${H}/?${encodeURIComponent(q)}&sig=${seed}`,
-        alt: q,
-        photographer: 'Unsplash'
-      });
+  // Topic → seed offset so different topics show different parts of the library
+  const TOPIC_SEEDS = {
+    nature:       [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29],
+    architecture: [100,101,102,103,104,106,107,108,110,111,112,113,114,115,116,117,118,119,120,121],
+    travel:       [200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219],
+    space:        [300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319],
+    abstract:     [400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418,419],
+    city:         [500,501,502,503,504,505,506,507,508,509,510,511,512,513,514,515,516,517,518,519],
+  };
+
+  // ── Fetch the image list (for author names) ────────────────────────────────
+  async function fetchList() {
+    if (listFetched) return;
+    try {
+      // Fetch pages 1–4 to get ~120 images with metadata
+      const pages = await Promise.all(
+        [1,2,3,4].map(p => fetch(`https://picsum.photos/v2/list?page=${p}&limit=30`).then(r => r.json()))
+      );
+      allImages = pages.flat();
+      listFetched = true;
+    } catch(e) {
+      // fallback: we'll use IDs without author names
+      listFetched = true;
     }
-    return urls;
   }
 
-  // ── Preload an image, resolve with final URL (after redirect) ───────────────
+  function getAuthor(id) {
+    const entry = allImages.find(img => String(img.id) === String(id));
+    return entry ? entry.author : 'Lorem Picsum';
+  }
+
+  // ── Build a batch for a topic ──────────────────────────────────────────────
+  function buildBatch(topic) {
+    const pool = TOPIC_SEEDS[topic] || TOPIC_SEEDS.nature;
+    // Shuffle pool and pick BATCH ids
+    const shuffled = [...pool].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, BATCH).map(id => ({
+      id,
+      url: `https://picsum.photos/id/${id}/${W}/${H}`,
+      thumb: `https://picsum.photos/id/${id}/200/120`,
+    }));
+  }
+
+  // ── Preload image ──────────────────────────────────────────────────────────
   function preloadImage(src) {
     return new Promise((resolve, reject) => {
       const img = new Image();
@@ -584,27 +618,35 @@ renderTodos();
     });
   }
 
-  // ── Render slides into DOM ──────────────────────────────────────────────────
+  // ── Skeleton ───────────────────────────────────────────────────────────────
+  function showSkeleton() {
+    stage.querySelectorAll('.img-slide').forEach(s => s.remove());
+    dotsEl.innerHTML = '';
+    const sk = document.createElement('div');
+    sk.className = 'img-slide loading';
+    sk.innerHTML = '<div class="img-skeleton"></div>';
+    stage.insertBefore(sk, stage.querySelector('.img-nav.prev'));
+  }
+
+  // ── Build slides ───────────────────────────────────────────────────────────
   function buildSlides(batch) {
-    // Remove old slides
     stage.querySelectorAll('.img-slide').forEach(s => s.remove());
     dotsEl.innerHTML = '';
     slides = [];
 
     batch.forEach((item, i) => {
-      // Slide
+      const author = getAuthor(item.id);
       const slide = document.createElement('div');
       slide.className = 'img-slide' + (i === 0 ? ' active' : '');
       slide.innerHTML = `
-        <img src="${item.url}" alt="${item.alt}" loading="lazy" />
+        <img src="${item.url}" alt="Photo by ${author}" />
         <div class="img-caption">
-          <span class="img-caption-text">${capitalize(item.alt)}</span>
-          <span class="img-caption-src">via Unsplash</span>
+          <span class="img-caption-text">Photo by ${author}</span>
+          <span class="img-caption-src">via Lorem Picsum</span>
         </div>`;
       stage.insertBefore(slide, stage.querySelector('.img-nav.prev'));
       slides.push(slide);
 
-      // Dot
       const dot = document.createElement('div');
       dot.className = 'img-dot' + (i === 0 ? ' active' : '');
       dot.onclick = () => goTo(i);
@@ -615,38 +657,24 @@ renderTodos();
     updateCounter();
   }
 
-  // ── Skeleton loading state ──────────────────────────────────────────────────
-  function showSkeleton() {
-    stage.querySelectorAll('.img-slide').forEach(s => s.remove());
-    dotsEl.innerHTML = '';
-    const sk = document.createElement('div');
-    sk.className = 'img-slide loading';
-    sk.innerHTML = '<div class="img-skeleton"></div>';
-    stage.insertBefore(sk, stage.querySelector('.img-nav.prev'));
-  }
-
-  // ── Load a topic ───────────────────────────────────────────────────────────
-  async function loadTopic(q) {
-    topic = q;
+  // ── Load topic ─────────────────────────────────────────────────────────────
+  async function loadTopic(topic) {
     stopTicker();
     showSkeleton();
     counter.textContent = 'Loading…';
     progressBar.style.width = '0%';
 
-    const batch = buildUrls(q, PRELOAD_COUNT);
+    await fetchList();
 
-    // Preload all images in parallel (skip failed ones)
+    const batch = buildBatch(topic);
     const results = await Promise.allSettled(batch.map(item => preloadImage(item.url)));
     const loaded = batch.filter((_, i) => results[i].status === 'fulfilled');
 
     if (!loaded.length) {
-      // Show an error state
       stage.querySelectorAll('.img-slide').forEach(s => s.remove());
       const err = document.createElement('div');
       err.className = 'img-slide active';
-      err.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:0.9rem;padding:24px;text-align:center">
-        Couldn't load images. Check your connection and try refreshing.
-      </div>`;
+      err.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:0.9rem;padding:24px;text-align:center">Couldn't load images. Check your connection and try refreshing.</div>`;
       stage.insertBefore(err, stage.querySelector('.img-nav.prev'));
       counter.textContent = '0 / 0';
       return;
@@ -658,6 +686,7 @@ renderTodos();
 
   // ── Navigation ─────────────────────────────────────────────────────────────
   function goTo(idx) {
+    if (!slides.length) return;
     slides[current].classList.remove('active');
     dotsEl.children[current]?.classList.remove('active');
     current = (idx + slides.length) % slides.length;
@@ -674,21 +703,17 @@ renderTodos();
   document.getElementById('img-prev').onclick = () => goTo(current - 1);
   document.getElementById('img-next').onclick = () => goTo(current + 1);
 
-  // Swipe support
   let touchStartX = 0;
   stage.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
-  stage.addEventListener('touchend',   e => {
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1));
-  });
+  stage.addEventListener('touchend',   e => { const dx = e.changedTouches[0].clientX - touchStartX; if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1)); });
 
-  // ── Autoplay ticker with progress bar ──────────────────────────────────────
+  // ── Autoplay ticker ────────────────────────────────────────────────────────
   function startTicker() {
     tickStart = performance.now();
     function frame(now) {
-      tickMs = now - tickStart;
-      progressBar.style.width = Math.min(100, (tickMs / SLIDE_INTERVAL) * 100) + '%';
-      if (tickMs >= SLIDE_INTERVAL) { goTo(current + 1); return; }
+      const elapsed = now - tickStart;
+      progressBar.style.width = Math.min(100, (elapsed / SLIDE_INTERVAL) * 100) + '%';
+      if (elapsed >= SLIDE_INTERVAL) { goTo(current + 1); return; }
       rafId = requestAnimationFrame(frame);
     }
     rafId = requestAnimationFrame(frame);
@@ -699,7 +724,6 @@ renderTodos();
     progressBar.style.width = '0%';
   }
 
-  // ── Autoplay toggle ────────────────────────────────────────────────────────
   autoLabel.onclick = () => {
     autoplay = !autoplay;
     autoLabel.textContent = autoplay ? '⏸ Pause' : '▶ Play';
@@ -707,24 +731,22 @@ renderTodos();
   };
 
   // ── Topic buttons ──────────────────────────────────────────────────────────
+  let activeTopic = 'nature';
   document.getElementById('img-topics').querySelectorAll('.img-topic').forEach(btn => {
     btn.onclick = () => {
       document.querySelectorAll('.img-topic').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      loadTopic(btn.dataset.q);
+      activeTopic = btn.dataset.q;
+      loadTopic(activeTopic);
     };
   });
 
-  document.getElementById('img-refresh-btn').onclick = () => loadTopic(topic);
+  document.getElementById('img-refresh-btn').onclick = () => loadTopic(activeTopic);
 
-  // ── Pause on hover ─────────────────────────────────────────────────────────
   stage.addEventListener('mouseenter', () => { if (autoplay) stopTicker(); });
   stage.addEventListener('mouseleave', () => { if (autoplay) startTicker(); });
 
-  function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
-
-  // ── Init ───────────────────────────────────────────────────────────────────
-  loadTopic(topic);
+  loadTopic('nature');
 })();
 
 /* ── NOTEPAD ── */
