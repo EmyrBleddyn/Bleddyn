@@ -424,7 +424,22 @@
     <ul class="todo-list" id="todo-list"></ul>
   </div>
 
- 
+  <!-- NEWS -->
+  <div class="card news-card">
+    <div class="news-controls">
+      <div class="news-tabs" id="news-tabs">
+        <button class="news-tab active" data-topic="world">World</button>
+        <button class="news-tab" data-topic="technology">Tech</button>
+        <button class="news-tab" data-topic="science">Science</button>
+        <button class="news-tab" data-topic="business">Business</button>
+      </div>
+      <button class="btn-refresh" id="news-refresh">↻ Refresh</button>
+    </div>
+    <div class="news-list" id="news-list">
+      <div class="news-loading">Loading headlines…</div>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -537,6 +552,51 @@ document.getElementById('todo-add').onclick = addTodo;
 document.getElementById('todo-input').onkeydown = e => { if (e.key === 'Enter') addTodo(); };
 renderTodos();
 
+/* ── NEWS ── */
+let currentTopic = 'world';
+
+async function fetchNews(topic) {
+  const list = document.getElementById('news-list');
+  list.innerHTML = '<div class="news-loading">Fetching headlines…</div>';
+  try {
+    // Using RSS2JSON free API with BBC RSS feeds
+    const feeds = {
+      world: 'http://feeds.bbci.co.uk/news/world/rss.xml',
+      technology: 'http://feeds.bbci.co.uk/news/technology/rss.xml',
+      science: 'http://feeds.bbci.co.uk/news/science_and_environment/rss.xml',
+      business: 'http://feeds.bbci.co.uk/news/business/rss.xml'
+    };
+    const url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feeds[topic])}&count=8`;
+    const res = await fetch(url);
+    const data = await res.json();
+
+    if (data.status !== 'ok' || !data.items?.length) throw new Error('No articles');
+
+    list.innerHTML = '';
+    data.items.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'news-item';
+      const pubDate = new Date(item.pubDate);
+      const ago = timeSince(pubDate);
+      div.innerHTML = `
+        <span class="news-source">BBC News</span>
+        <span class="news-headline">${item.title}</span>
+        <span class="news-time">${ago}</span>
+      `;
+      div.onclick = () => window.open(item.link, '_blank');
+      list.appendChild(div);
+    });
+  } catch(e) {
+    list.innerHTML = `
+      <div class="news-loading">
+        Couldn't load live news.<br>
+        <small style="font-size:0.78rem; margin-top:6px; display:block;">
+          Open <a href="https://www.bbc.co.uk/news" target="_blank" style="color:var(--accent)">BBC News</a> in a new tab,
+          or allow cross-origin requests in your browser.
+        </small>
+      </div>`;
+  }
+}
 
 function timeSince(date) {
   const s = Math.floor((new Date() - date) / 1000);
