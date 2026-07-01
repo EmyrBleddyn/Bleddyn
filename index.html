@@ -18,6 +18,7 @@
     --muted: #7b82a0;
     --done: #4ade80;
     --danger: #f87171;
+    --yellow: #facc15;
     --radius: 14px;
     --font: 'Inter', system-ui, sans-serif;
   }
@@ -45,17 +46,14 @@
     text-transform: uppercase;
   }
 
-  .greeting {
-    font-size: 0.9rem;
-    color: var(--muted);
-  }
+  .greeting { font-size: 0.9rem; color: var(--muted); }
 
   .grid {
     display: grid;
-    grid-template-columns: 320px 1fr;
+    grid-template-columns: 300px 1fr 340px;
     grid-template-rows: auto 1fr;
     gap: 18px;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
   }
 
@@ -67,216 +65,279 @@
   }
 
   /* ── CLOCK ── */
-  .clock-card {
-    grid-column: 1;
-    grid-row: 1;
-    text-align: center;
-    padding: 30px 22px;
-  }
-
+  .clock-card { grid-column: 1; grid-row: 1; text-align: center; padding: 30px 22px; }
   #clock-time {
-    font-size: 3.8rem;
-    font-weight: 700;
-    letter-spacing: -2px;
+    font-size: 3.4rem; font-weight: 700; letter-spacing: -2px;
     background: linear-gradient(135deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1;
   }
-
-  #clock-date {
-    margin-top: 8px;
-    font-size: 0.95rem;
-    color: var(--muted);
-  }
-
-  #clock-seconds {
-    display: inline-block;
-    margin-top: 14px;
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
-    color: var(--muted);
-    text-transform: uppercase;
-  }
+  #clock-date { margin-top: 8px; font-size: 0.9rem; color: var(--muted); }
+  #clock-seconds { display: inline-block; margin-top: 14px; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; }
 
   /* ── CALENDAR ── */
-  .calendar-card {
-    grid-column: 1;
-    grid-row: 2;
-  }
-
-  .cal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 14px;
-  }
-
-  .cal-header h2 {
-    font-size: 1rem;
-    font-weight: 600;
-  }
-
-  .cal-nav {
-    display: flex;
-    gap: 6px;
-  }
-
+  .calendar-card { grid-column: 1; grid-row: 2; }
+  .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .cal-header h2 { font-size: 1rem; font-weight: 600; }
+  .cal-nav { display: flex; gap: 6px; }
   .cal-nav button {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    color: var(--text);
-    border-radius: 7px;
-    width: 28px;
-    height: 28px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.15s;
+    background: var(--surface2); border: 1px solid var(--border); color: var(--text);
+    border-radius: 7px; width: 28px; height: 28px; cursor: pointer; font-size: 0.9rem;
+    display: flex; align-items: center; justify-content: center; transition: background 0.15s;
   }
-
   .cal-nav button:hover { background: var(--border); }
-
-  .cal-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 3px;
-    text-align: center;
-  }
-
-  .cal-day-name {
-    font-size: 0.7rem;
-    color: var(--muted);
-    padding: 4px 0;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .cal-day {
-    border-radius: 7px;
-    padding: 6px 2px;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; text-align: center; }
+  .cal-day-name { font-size: 0.7rem; color: var(--muted); padding: 4px 0; text-transform: uppercase; letter-spacing: 0.05em; }
+  .cal-day { border-radius: 7px; padding: 6px 2px; font-size: 0.85rem; cursor: pointer; transition: background 0.15s; }
   .cal-day:hover { background: var(--surface2); }
   .cal-day.other-month { color: var(--muted); opacity: 0.4; }
-  .cal-day.today {
-    background: var(--accent);
-    color: #fff;
-    font-weight: 700;
-  }
+  .cal-day.today { background: var(--accent); color: #fff; font-weight: 700; }
 
   /* ── TODO ── */
-  .todo-card {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .section-title {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    margin-bottom: 14px;
-    font-weight: 600;
-  }
-
-  .todo-input-row {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 14px;
-  }
-
+  .todo-card { grid-column: 2; grid-row: 1; }
+  .section-title { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 14px; font-weight: 600; }
+  .todo-input-row { display: flex; gap: 8px; margin-bottom: 14px; }
   .todo-input-row input {
-    flex: 1;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: var(--text);
-    padding: 9px 13px;
-    font-size: 0.9rem;
-    font-family: var(--font);
-    outline: none;
-    transition: border-color 0.15s;
+    flex: 1; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px;
+    color: var(--text); padding: 9px 13px; font-size: 0.9rem; font-family: var(--font); outline: none; transition: border-color 0.15s;
   }
-
   .todo-input-row input:focus { border-color: var(--accent); }
   .todo-input-row input::placeholder { color: var(--muted); }
-
-  .btn-add {
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 9px 16px;
-    font-size: 0.9rem;
-    font-family: var(--font);
-    cursor: pointer;
-    font-weight: 600;
-    transition: opacity 0.15s;
-  }
-
+  .btn-add { background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 9px 16px; font-size: 0.9rem; font-family: var(--font); cursor: pointer; font-weight: 600; transition: opacity 0.15s; }
   .btn-add:hover { opacity: 0.85; }
-
-  .todo-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-    max-height: 180px;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--border) transparent;
-  }
-
-  .todo-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 9px;
-    padding: 10px 13px;
-    transition: opacity 0.2s;
-  }
-
+  .todo-list { list-style: none; display: flex; flex-direction: column; gap: 7px; max-height: 180px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+  .todo-item { display: flex; align-items: center; gap: 10px; background: var(--surface2); border: 1px solid var(--border); border-radius: 9px; padding: 10px 13px; transition: opacity 0.2s; }
   .todo-item.done { opacity: 0.5; }
-
-  .todo-item input[type="checkbox"] {
-    accent-color: var(--done);
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-  }
-
-  .todo-item span {
-    flex: 1;
-    font-size: 0.9rem;
-  }
-
+  .todo-item input[type="checkbox"] { accent-color: var(--done); width: 16px; height: 16px; cursor: pointer; }
+  .todo-item span { flex: 1; font-size: 0.9rem; }
   .todo-item.done span { text-decoration: line-through; color: var(--muted); }
-
-  .todo-del {
-    background: none;
-    border: none;
-    color: var(--muted);
-    cursor: pointer;
-    font-size: 1rem;
-    line-height: 1;
-    opacity: 0;
-    transition: opacity 0.15s, color 0.15s;
-    padding: 0 2px;
-  }
-
+  .todo-del { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1rem; line-height: 1; opacity: 0; transition: opacity 0.15s, color 0.15s; padding: 0 2px; }
   .todo-item:hover .todo-del { opacity: 1; }
   .todo-del:hover { color: var(--danger); }
 
- </style>
+  /* ── IMAGE ROTATOR ── */
+  .img-card {
+    grid-column: 2; grid-row: 2;
+    display: flex; flex-direction: column; gap: 0;
+    padding: 0; overflow: hidden;
+  }
+
+  .img-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 16px; border-bottom: 1px solid var(--border); flex-shrink: 0;
+  }
+
+  .img-topics {
+    display: flex; gap: 5px; flex-wrap: wrap;
+  }
+
+  .img-topic {
+    background: var(--surface2); border: 1px solid var(--border); color: var(--muted);
+    border-radius: 7px; padding: 4px 11px; font-size: 0.78rem; cursor: pointer;
+    font-family: var(--font); transition: all 0.15s;
+  }
+  .img-topic.active { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+
+  .img-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+  .img-btn {
+    background: none; border: 1px solid var(--border); color: var(--muted);
+    border-radius: 7px; padding: 4px 10px; font-size: 0.8rem; cursor: pointer;
+    font-family: var(--font); transition: all 0.15s; white-space: nowrap;
+  }
+  .img-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .img-stage {
+    flex: 1; position: relative; overflow: hidden; background: var(--surface2);
+    min-height: 220px;
+  }
+
+  .img-slide {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.7s ease;
+  }
+  .img-slide.active { opacity: 1; }
+  .img-slide.loading { opacity: 1; }
+
+  .img-slide img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+
+  .img-skeleton {
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, var(--surface2) 25%, var(--border) 50%, var(--surface2) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+  }
+  @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+  .img-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 28px 14px 11px;
+    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%);
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 10px; opacity: 0; transition: opacity 0.3s;
+  }
+  .img-stage:hover .img-caption { opacity: 1; }
+
+  .img-caption-text { font-size: 0.78rem; color: rgba(255,255,255,0.9); line-height: 1.4; }
+  .img-caption-src { font-size: 0.7rem; color: rgba(255,255,255,0.6); white-space: nowrap; }
+
+  .img-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.15);
+    color: #fff; border-radius: 8px; width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 1rem; transition: background 0.15s;
+    opacity: 0; pointer-events: none;
+  }
+  .img-stage:hover .img-nav { opacity: 1; pointer-events: auto; }
+  .img-nav:hover { background: rgba(0,0,0,0.7); }
+  .img-nav.prev { left: 10px; }
+  .img-nav.next { right: 10px; }
+
+  .img-dots {
+    position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 5px;
+  }
+  .img-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(255,255,255,0.35); cursor: pointer; transition: background 0.2s, transform 0.2s;
+  }
+  .img-dot.active { background: #fff; transform: scale(1.3); }
+
+  .img-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 14px; border-top: 1px solid var(--border); flex-shrink: 0;
+  }
+
+  .img-progress {
+    flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; margin-right: 12px;
+  }
+  .img-progress-bar {
+    height: 100%; background: var(--accent); border-radius: 2px;
+    transition: width 0.1s linear;
+  }
+
+  .img-counter { font-size: 0.72rem; color: var(--muted); white-space: nowrap; }
+  .img-auto-label { font-size: 0.72rem; color: var(--muted); cursor: pointer; transition: color 0.15s; user-select: none; }
+  .img-auto-label:hover { color: var(--accent); }
+
+  /* ── NOTEPAD ── */
+  .notepad-card {
+    grid-column: 3;
+    grid-row: 1 / 3;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .notepad-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px 10px;
+    border-bottom: 1px solid var(--border);
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .notepad-actions { display: flex; gap: 6px; }
+
+  .np-btn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-family: var(--font);
+    padding: 4px 9px;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .np-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .np-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  .np-btn.primary:hover { opacity: 0.85; color: #fff; border-color: var(--accent); }
+
+  /* Tabs */
+  .np-tabs { display: flex; align-items: center; gap: 5px; overflow-x: auto; padding: 8px 12px 0; scrollbar-width: none; flex-shrink: 0; }
+  .np-tabs::-webkit-scrollbar { display: none; }
+  .np-tab {
+    display: flex; align-items: center; gap: 5px;
+    background: none; border: 1px solid var(--border); border-bottom: none; border-radius: 7px 7px 0 0;
+    padding: 5px 10px; font-size: 0.78rem; cursor: pointer; color: var(--muted);
+    white-space: nowrap; max-width: 120px; transition: all 0.15s;
+  }
+  .np-tab:hover { color: var(--text); }
+  .np-tab.active { background: var(--surface2); border-color: var(--accent); color: var(--text); font-weight: 500; }
+  .np-tab-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .np-tab-close { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 0.85rem; padding: 0; opacity: 0; transition: opacity 0.15s, color 0.15s; flex-shrink: 0; }
+  .np-tab:hover .np-tab-close, .np-tab.active .np-tab-close { opacity: 1; }
+  .np-tab-close:hover { color: var(--danger); }
+  .np-tab-add { background: none; border: 1px dashed var(--border); border-radius: 6px; color: var(--muted); width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; font-size: 1rem; transition: all 0.15s; }
+  .np-tab-add:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Toolbar */
+  .np-toolbar {
+    display: flex; align-items: center; gap: 2px; padding: 6px 10px;
+    border-bottom: 1px solid var(--border); background: var(--surface2); flex-wrap: wrap; flex-shrink: 0;
+  }
+  .np-tool {
+    background: none; border: 1px solid transparent; border-radius: 5px; color: var(--muted);
+    cursor: pointer; font-size: 0.78rem; font-family: var(--font); padding: 3px 6px;
+    transition: all 0.12s; min-width: 24px; text-align: center; line-height: 1.4;
+  }
+  .np-tool:hover { background: var(--border); color: var(--text); }
+  .np-tool-sep { width: 1px; height: 16px; background: var(--border); margin: 0 3px; flex-shrink: 0; }
+  .np-color-swatch { width: 13px; height: 13px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.12s; flex-shrink: 0; }
+  .np-color-swatch:hover { transform: scale(1.2); }
+  .np-color-swatch.selected { border-color: var(--text); }
+
+  /* Title */
+  .np-title-input {
+    background: none; border: none; color: var(--text); font-size: 0.95rem; font-weight: 600;
+    font-family: var(--font); padding: 10px 14px 6px; outline: none; width: 100%;
+    border-bottom: 1px solid var(--border); flex-shrink: 0;
+  }
+  .np-title-input::placeholder { color: var(--muted); font-weight: 400; }
+
+  /* Editor */
+  .np-editor {
+    flex: 1; padding: 10px 14px; outline: none; font-size: 0.88rem; line-height: 1.7;
+    color: var(--text); font-family: var(--font); overflow-y: auto;
+    scrollbar-width: thin; scrollbar-color: var(--border) transparent; min-height: 0;
+  }
+  .np-editor:empty:before { content: attr(data-placeholder); color: var(--muted); pointer-events: none; }
+  .np-editor h1 { font-size: 1.25rem; margin: 6px 0 3px; }
+  .np-editor h2 { font-size: 1.05rem; margin: 6px 0 3px; }
+  .np-editor h3 { font-size: 0.95rem; margin: 5px 0 2px; }
+  .np-editor ul, .np-editor ol { padding-left: 20px; margin: 3px 0; }
+  .np-editor blockquote { border-left: 3px solid var(--accent); padding-left: 10px; color: var(--muted); margin: 4px 0; font-style: italic; }
+  .np-editor code { background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 1px 4px; font-family: 'Courier New', monospace; font-size: 0.82em; color: var(--accent2); }
+  .np-editor a { color: var(--accent); }
+  .np-editor hr { border: none; border-top: 1px solid var(--border); margin: 8px 0; }
+
+  /* Status */
+  .np-status {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 5px 14px; font-size: 0.68rem; color: var(--muted);
+    border-top: 1px solid var(--border); background: var(--surface2); gap: 10px; flex-shrink: 0;
+  }
+  .np-save-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--done); transition: background 0.3s; display: inline-block; margin-right: 4px; }
+  .np-save-dot.unsaved { background: var(--yellow); }
+
+  @media (max-width: 1100px) {
+    .grid { grid-template-columns: 280px 1fr; }
+    .notepad-card { grid-column: 1 / 3; grid-row: 3; min-height: 400px; }
+  }
+  @media (max-width: 700px) {
+    .grid { grid-template-columns: 1fr; }
+    .clock-card, .calendar-card, .todo-card, .news-card, .notepad-card { grid-column: 1; grid-row: auto; }
+  }
+</style>
 </head>
 <body>
 
@@ -297,7 +358,7 @@
   <!-- CALENDAR -->
   <div class="card calendar-card">
     <div class="cal-header">
-      <h2 id="cal-month-label">June 2026</h2>
+      <h2 id="cal-month-label">July 2026</h2>
       <div class="cal-nav">
         <button id="cal-prev">‹</button>
         <button id="cal-next">›</button>
@@ -316,6 +377,95 @@
     <ul class="todo-list" id="todo-list"></ul>
   </div>
 
+  <!-- IMAGE ROTATOR -->
+  <div class="card img-card">
+    <div class="img-header">
+      <div class="img-topics" id="img-topics">
+        <button class="img-topic active" data-q="nature">Nature</button>
+        <button class="img-topic" data-q="architecture">Architecture</button>
+        <button class="img-topic" data-q="travel">Travel</button>
+        <button class="img-topic" data-q="space">Space</button>
+        <button class="img-topic" data-q="abstract">Abstract</button>
+        <button class="img-topic" data-q="city">City</button>
+      </div>
+      <div class="img-actions">
+        <button class="img-btn" id="img-refresh-btn">↻ New set</button>
+      </div>
+    </div>
+
+    <div class="img-stage" id="img-stage">
+      <!-- slides injected by JS -->
+      <button class="img-nav prev" id="img-prev">&#8249;</button>
+      <button class="img-nav next" id="img-next">&#8250;</button>
+      <div class="img-dots" id="img-dots"></div>
+    </div>
+
+    <div class="img-footer">
+      <div class="img-progress"><div class="img-progress-bar" id="img-progress-bar"></div></div>
+      <span class="img-counter" id="img-counter">— / —</span>
+      <span class="img-auto-label" id="img-auto-label">⏸ Pause</span>
+    </div>
+  </div>
+
+  <!-- NOTEPAD -->
+  <div class="card notepad-card">
+    <div class="notepad-header">
+      <span class="section-title" style="margin-bottom:0">📝 Notes</span>
+      <div class="notepad-actions">
+        <button class="np-btn" id="np-export" title="Export note as HTML">⬇</button>
+        <button class="np-btn primary" id="np-save">Save</button>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="np-tabs" id="np-tabs">
+      <button class="np-tab-add" id="np-tab-add" title="New note">+</button>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="np-toolbar">
+      <button class="np-tool" data-cmd="bold"><b>B</b></button>
+      <button class="np-tool" data-cmd="italic"><i>I</i></button>
+      <button class="np-tool" data-cmd="underline"><u>U</u></button>
+      <button class="np-tool" data-cmd="strikeThrough"><s>S</s></button>
+      <div class="np-tool-sep"></div>
+      <button class="np-tool" data-cmd="formatBlock" data-val="h1">H1</button>
+      <button class="np-tool" data-cmd="formatBlock" data-val="h2">H2</button>
+      <button class="np-tool" data-cmd="formatBlock" data-val="p">¶</button>
+      <div class="np-tool-sep"></div>
+      <button class="np-tool" data-cmd="insertUnorderedList">•—</button>
+      <button class="np-tool" data-cmd="insertOrderedList">1.</button>
+      <button class="np-tool" data-cmd="formatBlock" data-val="blockquote">"</button>
+      <div class="np-tool-sep"></div>
+      <button class="np-tool" id="np-code-btn">&lt;/&gt;</button>
+      <div class="np-tool-sep"></div>
+      <span style="font-size:0.65rem;color:var(--muted)">HL</span>
+      <div class="np-color-swatch selected" style="background:#facc15" data-color="#facc15"></div>
+      <div class="np-color-swatch" style="background:#4ade80" data-color="#4ade80"></div>
+      <div class="np-color-swatch" style="background:#60a5fa" data-color="#60a5fa"></div>
+      <div class="np-color-swatch" style="background:#f472b6" data-color="#f472b6"></div>
+      <button class="np-tool" id="np-hl-btn">▣</button>
+      <div class="np-tool-sep"></div>
+      <button class="np-tool" data-cmd="removeFormat">✕</button>
+      <button class="np-tool" data-cmd="undo">↩</button>
+      <button class="np-tool" data-cmd="redo">↪</button>
+    </div>
+
+    <!-- Title -->
+    <input type="text" class="np-title-input" id="np-title" placeholder="Note title…" />
+
+    <!-- Editor -->
+    <div class="np-editor" id="np-editor" contenteditable="true" data-placeholder="Start writing…"></div>
+
+    <!-- Status bar -->
+    <div class="np-status">
+      <span><span class="np-save-dot" id="np-save-dot"></span><span id="np-save-label">Saved</span></span>
+      <span id="np-word-count">0 words</span>
+      <span id="np-last-saved"></span>
+    </div>
+  </div>
+
+</div>
 
 <script>
 /* ── CLOCK ── */
@@ -326,107 +476,380 @@ function updateClock() {
   const s = String(now.getSeconds()).padStart(2,'0');
   document.getElementById('clock-time').textContent = `${h}:${m}`;
   document.getElementById('clock-seconds').textContent = `${s}s`;
-  document.getElementById('clock-date').textContent = now.toLocaleDateString('en-GB', {
-    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
-  });
+  document.getElementById('clock-date').textContent = now.toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
   const hr = now.getHours();
-  const g = hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening';
-  document.getElementById('greeting').textContent = g;
+  document.getElementById('greeting').textContent = hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening';
 }
-updateClock();
-setInterval(updateClock, 1000);
+updateClock(); setInterval(updateClock, 1000);
 
 /* ── CALENDAR ── */
 let calYear, calMonth;
 const today = new Date();
-calYear = today.getFullYear();
-calMonth = today.getMonth();
+calYear = today.getFullYear(); calMonth = today.getMonth();
 
 function renderCal() {
   const grid = document.getElementById('cal-grid');
   const label = document.getElementById('cal-month-label');
   grid.innerHTML = '';
-  const monthNames = ['January','February','March','April','May','June',
-    'July','August','September','October','November','December'];
+  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   label.textContent = `${monthNames[calMonth]} ${calYear}`;
-  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  days.forEach(d => {
-    const el = document.createElement('div');
-    el.className = 'cal-day-name';
-    el.textContent = d;
-    grid.appendChild(el);
+  ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d => {
+    const el = document.createElement('div'); el.className = 'cal-day-name'; el.textContent = d; grid.appendChild(el);
   });
   const first = new Date(calYear, calMonth, 1).getDay();
   const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
   const daysInPrev = new Date(calYear, calMonth, 0).getDate();
-  for (let i = first - 1; i >= 0; i--) {
-    const el = document.createElement('div');
-    el.className = 'cal-day other-month';
-    el.textContent = daysInPrev - i;
-    grid.appendChild(el);
-  }
+  for (let i = first - 1; i >= 0; i--) { const el = document.createElement('div'); el.className = 'cal-day other-month'; el.textContent = daysInPrev - i; grid.appendChild(el); }
   for (let d = 1; d <= daysInMonth; d++) {
-    const el = document.createElement('div');
-    el.className = 'cal-day';
-    el.textContent = d;
-    if (d === today.getDate() && calMonth === today.getMonth() && calYear === today.getFullYear()) {
-      el.classList.add('today');
-    }
+    const el = document.createElement('div'); el.className = 'cal-day'; el.textContent = d;
+    if (d === today.getDate() && calMonth === today.getMonth() && calYear === today.getFullYear()) el.classList.add('today');
     grid.appendChild(el);
   }
   const total = first + daysInMonth;
   const remaining = total % 7 === 0 ? 0 : 7 - (total % 7);
-  for (let d = 1; d <= remaining; d++) {
-    const el = document.createElement('div');
-    el.className = 'cal-day other-month';
-    el.textContent = d;
-    grid.appendChild(el);
-  }
+  for (let d = 1; d <= remaining; d++) { const el = document.createElement('div'); el.className = 'cal-day other-month'; el.textContent = d; grid.appendChild(el); }
 }
-
-document.getElementById('cal-prev').onclick = () => {
-  calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } renderCal();
-};
-document.getElementById('cal-next').onclick = () => {
-  calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } renderCal();
-};
+document.getElementById('cal-prev').onclick = () => { calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } renderCal(); };
+document.getElementById('cal-next').onclick = () => { calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } renderCal(); };
 renderCal();
 
 /* ── TODO ── */
 let todos = JSON.parse(localStorage.getItem('dash-todos') || '[]');
-
 function saveTodos() { localStorage.setItem('dash-todos', JSON.stringify(todos)); }
-
 function renderTodos() {
-  const list = document.getElementById('todo-list');
-  list.innerHTML = '';
+  const list = document.getElementById('todo-list'); list.innerHTML = '';
   todos.forEach((t, i) => {
     const li = document.createElement('li');
     li.className = 'todo-item' + (t.done ? ' done' : '');
-    li.innerHTML = `
-      <input type="checkbox" ${t.done ? 'checked' : ''}>
-      <span>${t.text}</span>
-      <button class="todo-del" title="Delete">×</button>
-    `;
+    li.innerHTML = `<input type="checkbox" ${t.done ? 'checked' : ''}><span>${t.text}</span><button class="todo-del" title="Delete">×</button>`;
     li.querySelector('input').onchange = () => { todos[i].done = !todos[i].done; saveTodos(); renderTodos(); };
     li.querySelector('.todo-del').onclick = () => { todos.splice(i,1); saveTodos(); renderTodos(); };
     list.appendChild(li);
   });
 }
-
 function addTodo() {
   const input = document.getElementById('todo-input');
-  const text = input.value.trim();
-  if (!text) return;
-  todos.unshift({ text, done: false });
-  saveTodos(); renderTodos();
-  input.value = '';
+  const text = input.value.trim(); if (!text) return;
+  todos.unshift({ text, done: false }); saveTodos(); renderTodos(); input.value = '';
 }
-
 document.getElementById('todo-add').onclick = addTodo;
 document.getElementById('todo-input').onkeydown = e => { if (e.key === 'Enter') addTodo(); };
 renderTodos();
 
+/* ── IMAGE ROTATOR ── */
+(function() {
+  const SLIDE_INTERVAL = 7000; // ms per slide
+  const PRELOAD_COUNT  = 6;    // images per batch
+  const W = 900, H = 480;
+
+  let topic       = 'nature';
+  let slides      = [];       // { url, alt, photographer }
+  let current     = 0;
+  let autoplay    = true;
+  let ticker      = null;
+  let tickMs      = 0;
+  let tickStart   = null;
+  let rafId       = null;
+
+  const stage     = document.getElementById('img-stage');
+  const dotsEl    = document.getElementById('img-dots');
+  const counter   = document.getElementById('img-counter');
+  const progressBar = document.getElementById('img-progress-bar');
+  const autoLabel = document.getElementById('img-auto-label');
+
+  // ── Build a batch of Unsplash Source URLs (no API key needed) ──────────────
+  // Unsplash Source: https://source.unsplash.com/WxHxARSBmVQ — stable single image
+  // We use featured + topic + unique seed to get varied images
+  function buildUrls(q, n) {
+    const urls = [];
+    for (let i = 0; i < n; i++) {
+      // cache-bust with a random seed so each slot loads a different photo
+      const seed = Math.floor(Math.random() * 1e9);
+      urls.push({
+        url: `https://source.unsplash.com/featured/${W}x${H}/?${encodeURIComponent(q)}&sig=${seed}`,
+        alt: q,
+        photographer: 'Unsplash'
+      });
+    }
+    return urls;
+  }
+
+  // ── Preload an image, resolve with final URL (after redirect) ───────────────
+  function preloadImage(src) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload  = () => resolve(img);
+      img.onerror = reject;
+      img.src = src;
+    });
+  }
+
+  // ── Render slides into DOM ──────────────────────────────────────────────────
+  function buildSlides(batch) {
+    // Remove old slides
+    stage.querySelectorAll('.img-slide').forEach(s => s.remove());
+    dotsEl.innerHTML = '';
+    slides = [];
+
+    batch.forEach((item, i) => {
+      // Slide
+      const slide = document.createElement('div');
+      slide.className = 'img-slide' + (i === 0 ? ' active' : '');
+      slide.innerHTML = `
+        <img src="${item.url}" alt="${item.alt}" loading="lazy" />
+        <div class="img-caption">
+          <span class="img-caption-text">${capitalize(item.alt)}</span>
+          <span class="img-caption-src">via Unsplash</span>
+        </div>`;
+      stage.insertBefore(slide, stage.querySelector('.img-nav.prev'));
+      slides.push(slide);
+
+      // Dot
+      const dot = document.createElement('div');
+      dot.className = 'img-dot' + (i === 0 ? ' active' : '');
+      dot.onclick = () => goTo(i);
+      dotsEl.appendChild(dot);
+    });
+
+    current = 0;
+    updateCounter();
+  }
+
+  // ── Skeleton loading state ──────────────────────────────────────────────────
+  function showSkeleton() {
+    stage.querySelectorAll('.img-slide').forEach(s => s.remove());
+    dotsEl.innerHTML = '';
+    const sk = document.createElement('div');
+    sk.className = 'img-slide loading';
+    sk.innerHTML = '<div class="img-skeleton"></div>';
+    stage.insertBefore(sk, stage.querySelector('.img-nav.prev'));
+  }
+
+  // ── Load a topic ───────────────────────────────────────────────────────────
+  async function loadTopic(q) {
+    topic = q;
+    stopTicker();
+    showSkeleton();
+    counter.textContent = 'Loading…';
+    progressBar.style.width = '0%';
+
+    const batch = buildUrls(q, PRELOAD_COUNT);
+
+    // Preload all images in parallel (skip failed ones)
+    const results = await Promise.allSettled(batch.map(item => preloadImage(item.url)));
+    const loaded = batch.filter((_, i) => results[i].status === 'fulfilled');
+
+    if (!loaded.length) {
+      // Show an error state
+      stage.querySelectorAll('.img-slide').forEach(s => s.remove());
+      const err = document.createElement('div');
+      err.className = 'img-slide active';
+      err.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:0.9rem;padding:24px;text-align:center">
+        Couldn't load images. Check your connection and try refreshing.
+      </div>`;
+      stage.insertBefore(err, stage.querySelector('.img-nav.prev'));
+      counter.textContent = '0 / 0';
+      return;
+    }
+
+    buildSlides(loaded);
+    if (autoplay) startTicker();
+  }
+
+  // ── Navigation ─────────────────────────────────────────────────────────────
+  function goTo(idx) {
+    slides[current].classList.remove('active');
+    dotsEl.children[current]?.classList.remove('active');
+    current = (idx + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dotsEl.children[current]?.classList.add('active');
+    updateCounter();
+    if (autoplay) { stopTicker(); startTicker(); }
+  }
+
+  function updateCounter() {
+    counter.textContent = slides.length ? `${current + 1} / ${slides.length}` : '— / —';
+  }
+
+  document.getElementById('img-prev').onclick = () => goTo(current - 1);
+  document.getElementById('img-next').onclick = () => goTo(current + 1);
+
+  // Swipe support
+  let touchStartX = 0;
+  stage.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  stage.addEventListener('touchend',   e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1));
+  });
+
+  // ── Autoplay ticker with progress bar ──────────────────────────────────────
+  function startTicker() {
+    tickStart = performance.now();
+    function frame(now) {
+      tickMs = now - tickStart;
+      progressBar.style.width = Math.min(100, (tickMs / SLIDE_INTERVAL) * 100) + '%';
+      if (tickMs >= SLIDE_INTERVAL) { goTo(current + 1); return; }
+      rafId = requestAnimationFrame(frame);
+    }
+    rafId = requestAnimationFrame(frame);
+  }
+
+  function stopTicker() {
+    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    progressBar.style.width = '0%';
+  }
+
+  // ── Autoplay toggle ────────────────────────────────────────────────────────
+  autoLabel.onclick = () => {
+    autoplay = !autoplay;
+    autoLabel.textContent = autoplay ? '⏸ Pause' : '▶ Play';
+    autoplay ? startTicker() : stopTicker();
+  };
+
+  // ── Topic buttons ──────────────────────────────────────────────────────────
+  document.getElementById('img-topics').querySelectorAll('.img-topic').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('.img-topic').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      loadTopic(btn.dataset.q);
+    };
+  });
+
+  document.getElementById('img-refresh-btn').onclick = () => loadTopic(topic);
+
+  // ── Pause on hover ─────────────────────────────────────────────────────────
+  stage.addEventListener('mouseenter', () => { if (autoplay) stopTicker(); });
+  stage.addEventListener('mouseleave', () => { if (autoplay) startTicker(); });
+
+  function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  // ── Init ───────────────────────────────────────────────────────────────────
+  loadTopic(topic);
+})();
+
+/* ── NOTEPAD ── */
+const NP_KEY = 'dash-notes';
+function npLoadNotes() { try { return JSON.parse(localStorage.getItem(NP_KEY)) || []; } catch { return []; } }
+function npSaveNotes() { localStorage.setItem(NP_KEY, JSON.stringify(npNotes)); }
+
+let npNotes = npLoadNotes();
+if (!npNotes.length) {
+  npNotes = [{ id: Date.now(), title: 'My Notes', content: '<p>Start writing here. Use the toolbar to format text.</p>', modified: Date.now() }];
+  npSaveNotes();
+}
+let npActiveId = npNotes[0].id;
+let npHlColor = '#facc15';
+let npSaveTimeout = null;
+
+function npGetActive() { return npNotes.find(n => n.id === npActiveId); }
+
+function npRenderTabs() {
+  const row = document.getElementById('np-tabs');
+  row.querySelectorAll('.np-tab').forEach(t => t.remove());
+  const addBtn = document.getElementById('np-tab-add');
+  npNotes.forEach(note => {
+    const tab = document.createElement('div');
+    tab.className = 'np-tab' + (note.id === npActiveId ? ' active' : '');
+    tab.innerHTML = `<span class="np-tab-name">${note.title || 'Untitled'}</span><button class="np-tab-close">×</button>`;
+    tab.querySelector('.np-tab-name').onclick = () => npSwitch(note.id);
+    tab.querySelector('.np-tab-close').onclick = e => { e.stopPropagation(); npDelete(note.id); };
+    row.insertBefore(tab, addBtn);
+  });
+}
+
+function npSwitch(id) { npFlushSave(); npActiveId = id; npLoad(); npRenderTabs(); }
+
+function npAddNote() {
+  npFlushSave();
+  const note = { id: Date.now(), title: 'Untitled', content: '', modified: Date.now() };
+  npNotes.push(note); npActiveId = note.id; npSaveNotes(); npRenderTabs(); npLoad();
+  document.getElementById('np-title').focus();
+}
+
+function npDelete(id) {
+  if (npNotes.length === 1) { npNotes[0].title = 'Untitled'; npNotes[0].content = ''; npSaveNotes(); npLoad(); return; }
+  const idx = npNotes.findIndex(n => n.id === id);
+  npNotes.splice(idx, 1);
+  if (npActiveId === id) npActiveId = npNotes[Math.max(0, idx-1)].id;
+  npSaveNotes(); npRenderTabs(); npLoad();
+}
+
+function npLoad() {
+  const note = npGetActive(); if (!note) return;
+  document.getElementById('np-title').value = note.title || '';
+  document.getElementById('np-editor').innerHTML = note.content || '';
+  npUpdateCount(); npMarkSaved();
+}
+
+function npMarkUnsaved() { document.getElementById('np-save-dot').classList.add('unsaved'); document.getElementById('np-save-label').textContent = 'Unsaved'; }
+function npMarkSaved() {
+  document.getElementById('np-save-dot').classList.remove('unsaved'); document.getElementById('np-save-label').textContent = 'Saved';
+  const note = npGetActive();
+  if (note) document.getElementById('np-last-saved').textContent = new Date(note.modified).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+}
+
+function npFlushSave() {
+  if (npSaveTimeout) { clearTimeout(npSaveTimeout); npSaveTimeout = null; }
+  const note = npGetActive(); if (!note) return;
+  note.title = document.getElementById('np-title').value || 'Untitled';
+  note.content = document.getElementById('np-editor').innerHTML;
+  note.modified = Date.now();
+  npSaveNotes(); npRenderTabs(); npMarkSaved();
+}
+
+function npScheduleSave() { npMarkUnsaved(); if (npSaveTimeout) clearTimeout(npSaveTimeout); npSaveTimeout = setTimeout(npFlushSave, 1200); }
+
+function npUpdateCount() {
+  const text = document.getElementById('np-editor').innerText || '';
+  const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+  document.getElementById('np-word-count').textContent = `${words} word${words !== 1 ? 's' : ''}`;
+}
+
+document.getElementById('np-editor').addEventListener('input', () => { npUpdateCount(); npScheduleSave(); });
+document.getElementById('np-title').addEventListener('input', npScheduleSave);
+document.getElementById('np-save').onclick = npFlushSave;
+document.getElementById('np-tab-add').onclick = npAddNote;
+
+// Toolbar
+document.querySelectorAll('.np-tool[data-cmd]').forEach(btn => {
+  btn.addEventListener('mousedown', e => {
+    e.preventDefault();
+    document.execCommand(btn.dataset.cmd, false, btn.dataset.val || null);
+    document.getElementById('np-editor').focus();
+  });
+});
+
+document.getElementById('np-code-btn').addEventListener('mousedown', e => {
+  e.preventDefault();
+  const sel = window.getSelection();
+  if (!sel.rangeCount) return;
+  const range = sel.getRangeAt(0);
+  const code = document.createElement('code');
+  try { range.surroundContents(code); } catch { document.execCommand('insertHTML', false, `<code>${sel.toString()}</code>`); }
+  document.getElementById('np-editor').focus(); npScheduleSave();
+});
+
+document.querySelectorAll('.np-color-swatch').forEach(s => {
+  s.addEventListener('click', () => { document.querySelectorAll('.np-color-swatch').forEach(x => x.classList.remove('selected')); s.classList.add('selected'); npHlColor = s.dataset.color; });
+});
+
+document.getElementById('np-hl-btn').addEventListener('mousedown', e => {
+  e.preventDefault(); document.execCommand('hiliteColor', false, npHlColor); document.getElementById('np-editor').focus(); npScheduleSave();
+});
+
+// Export
+document.getElementById('np-export').onclick = () => {
+  const note = npGetActive(); if (!note) return;
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${note.title}</title><style>body{font-family:system-ui,sans-serif;max-width:720px;margin:40px auto;padding:0 24px;line-height:1.7}blockquote{border-left:3px solid #6c8eff;padding-left:14px;color:#555;font-style:italic}code{background:#f3f4f6;padding:2px 6px;border-radius:4px;font-family:monospace}</style></head><body><h1>${note.title}</h1>${note.content}</body></html>`;
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([html],{type:'text/html'}));
+  a.download = (note.title||'note').replace(/[^a-z0-9]/gi,'-').toLowerCase()+'.html'; a.click();
+};
+
+// Cmd+S
+document.addEventListener('keydown', e => { if ((e.metaKey||e.ctrlKey) && e.key==='s') { e.preventDefault(); npFlushSave(); } });
+
+// Init
+npRenderTabs(); npLoad();
 </script>
 </body>
 </html>
