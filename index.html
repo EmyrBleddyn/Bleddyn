@@ -276,20 +276,13 @@
   .todo-item:hover .todo-del { opacity: 1; }
   .todo-del:hover { color: var(--danger); }
 
-  
-  @media (max-width: 800px) {
-    .grid { grid-template-columns: 1fr; }
-    .clock-card, .calendar-card, .todo-card, {
-      grid-column: 1; grid-row: auto;
-    }
-  }
-</style>
+ </style>
 </head>
 <body>
 
 <header>
   <h1>⌂ Dashboard</h1>
-  <span class="greeting" id="greeting">Hi Rhys</span>
+  <span class="greeting" id="greeting">Good morning</span>
 </header>
 
 <div class="grid">
@@ -323,7 +316,8 @@
     <ul class="todo-list" id="todo-list"></ul>
   </div>
 
-  
+
+<script>
 /* ── CLOCK ── */
 function updateClock() {
   const now = new Date();
